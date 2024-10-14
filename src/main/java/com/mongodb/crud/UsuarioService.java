@@ -15,7 +15,7 @@ public class UsuarioService {
     public void save(String name, String email, String cep) {
         long id = this.usuarioRepository.count() + 1;
         Usuario novoUsuario = new Usuario(String.valueOf(id), name, email, cep);
-        this.usuarioRepository.save(novoUsuario);
+        this.usuarioRepository.insert(novoUsuario);
     }
 
     public long count() {
@@ -48,6 +48,4 @@ public class UsuarioService {
         return usuario;
     }
 
-
-
-    }
+}
