@@ -1,5 +1,8 @@
-package com.mongodb.crud;
+package com.mongodb.crud.service;
 
+import com.mongodb.crud.config.UserNotFoundException;
+import com.mongodb.crud.model.Usuario;
+import com.mongodb.crud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

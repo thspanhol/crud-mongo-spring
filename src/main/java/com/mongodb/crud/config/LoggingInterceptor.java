@@ -1,5 +1,6 @@
-package com.mongodb.crud;
+package com.mongodb.crud.config;
 
+import com.mongodb.crud.model.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;

@@ -1,6 +1,4 @@
-package com.mongodb.crud;
-
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.mongodb.crud.model;
 
 //@Document(collation = "nova-colecao")
 public class Usuario {

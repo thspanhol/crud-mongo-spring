@@ -1,4 +1,4 @@
-package com.mongodb.crud;
+package com.mongodb.crud.model;
 
 public class CookieService {
     static String cookie;

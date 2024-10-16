@@ -1,6 +1,5 @@
 package com.mongodb.crud.config;
 
-import com.mongodb.crud.LoggingInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

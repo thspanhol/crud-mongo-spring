@@ -1,5 +1,6 @@
-package com.mongodb.crud;
+package com.mongodb.crud.repository;
 
+import com.mongodb.crud.model.Usuario;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
