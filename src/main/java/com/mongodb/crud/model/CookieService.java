@@ -1,13 +1,11 @@
 package com.mongodb.crud.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class CookieService {
+    @Getter
+    @Setter
     static String cookie;
 
-    public static String getCookie() {
-        return cookie;
-    }
-
-    public static void setCookie(String cookie) {
-        CookieService.cookie = cookie;
-    }
 }
