@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
+//TODO: Essa classe não é o LoggingInterceptor e sim o CookieInterceptor
+//TODO: Implementa a CookieService e injeta ela aqui pra fazer a manipulação de cookies
 @Component
 public class LoggingInterceptor implements HandlerInterceptor {
 
