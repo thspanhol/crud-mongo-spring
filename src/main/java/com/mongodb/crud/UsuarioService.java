@@ -13,21 +13,22 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public void save(String name, String email, String cep) {
-        long id = this.usuarioRepository.count() + 1;
-        Usuario novoUsuario = new Usuario(String.valueOf(id), name, email, cep);
-        this.usuarioRepository.insert(novoUsuario);
+        if (name == null || email == null || cep == null) {
+            throw new UserNotFoundException("Favor informar nome, email e cep do usuário para cadastra-lo.");
+        } else {
+            long id = this.usuarioRepository.count() + 1;
+            Usuario novoUsuario = new Usuario(String.valueOf(id), name, email, cep);
+            this.usuarioRepository.insert(novoUsuario);
+        }
     }
 
     public long count() {
         return this.usuarioRepository.count();
     }
 
-    public Optional<Usuario> findById(String id) {
-        Optional<Usuario> usuario = this.usuarioRepository.findById(id);
-        if (usuario.isPresent()) {
-            return usuario;
-        }
-        return null;
+    public Usuario findById(String id) {
+        return this.usuarioRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado com ID: " + id));
     }
 
     public List<Usuario> findAll() {
@@ -35,17 +36,26 @@ public class UsuarioService {
     }
 
     public void deleteById(String id) {
-        this.usuarioRepository.deleteById(id);
+        Optional<Usuario> usuario = this.usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            this.usuarioRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException("Usuário não encontrado com ID: " + id);
+        }
     }
 
     public void editUser(String id, String name, String email, String cep) {
-        Usuario editUsuario = new Usuario(id, name, email, cep);
-        this.usuarioRepository.save(editUsuario);
+        Optional<Usuario> usuario = this.usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            Usuario editUsuario = new Usuario(id, name, email, cep);
+            this.usuarioRepository.save(editUsuario);
+        } else {
+            throw new UserNotFoundException("Usuário não encontrado com ID: " + id);
+        }
     }
 
     public List<Usuario> findByName(String nome) {
         List<Usuario> usuario = this.usuarioRepository.findByNomeContainingIgnoreCase(nome);
         return usuario;
     }
-
 }
