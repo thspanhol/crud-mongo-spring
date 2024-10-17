@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,23 +31,21 @@ public class UsuarioController {
 
     //TODO: ResponseEntity é uma maneira antiga e defasada que não vaz mais sentido. Responde sempre o próprio objeto
     // Se precisar mudar o verbo de resposta, usa o @ResponseStatus()
+    // Feito
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obterUsuarioPeloId(@PathVariable String id) {
-        Usuario usuario = usuarioService.findById(id);
-        return ResponseEntity.ok(usuario);
+    public Usuario obterUsuarioPeloId(@PathVariable String id) {
+        return usuarioService.findById(id);
     }
 
     //TODO: Cria uma classe pros ExceptionHandlers - nunca na controller
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
+    // Feito
 
     //TODO: @PathVariable é quando a variavel faz parte da url. Ex: /users/123/details
     // @RequestParam não é declarado na url. Ex: @RequestParam("nome") String nome
     // Nesse caso de buscar pelo nome, o correto é usar o @RequestParam
-    @GetMapping("/nome={nome}")
-    public List<Usuario> obterPeloNome(@PathVariable String nome) {
+    // Feito
+    @GetMapping("/nome")
+    public List<Usuario> obterPeloNome(@RequestParam("nome") String nome) {
         return usuarioService.findByName(nome);
     }
 
@@ -57,30 +56,33 @@ public class UsuarioController {
 
     //TODO: "response" como nome da variavel tá estranho.
     // Envia o objeto inteiro pra dentro da service. Ex: usuarioService.save(request)
+    // Feito
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarUsuario(@RequestBody UsuarioDTO response) {
-        usuarioService.save(response.nome(), response.email(), response.cep());
+    public void cadastrarUsuario(@RequestBody UsuarioDTO usuario) {
+        usuarioService.save(usuario);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletaUsuario(@PathVariable String id) {
-        usuarioService.deleteById(id);
+        usuarioService.deleteBySingleId(id);
     }
 
     //TODO: Evita qualquer tipo de lógica dentro da controller, loops, ifs.
     // Envia a lista inteira de ids pra service e ela se encarrega do resto.
+    // Feito
     @DeleteMapping("/ids")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletaUsuariosPelosIds(@RequestParam("lista") List<String> ids) {
-        ids.forEach(id -> usuarioService.deleteById(id));
+        usuarioService.deleteByIdsList(ids);
     }
 
     //TODO: Envia o objeto inteiro pra dentro da service. Ex: usuarioService.editUser(id, request)
+    // Feito
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void alteraUsuario(@RequestBody UsuarioDTO usuario, @PathVariable String id) {
-        usuarioService.editUser(id, usuario.nome(), usuario.email(), usuario.cep());
+        usuarioService.editUser(id, usuario);
     }
 }

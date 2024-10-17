@@ -2,15 +2,19 @@ package com.mongodb.crud.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.lang.NonNull;
 
 @Data
 @NoArgsConstructor
+//@RequiredArgsConstructor
 //@Document(collation = "nova-colecao")
 public class Usuario {
     private String id;
-    private String nome;
-    private String email;
-    private String cep;
+     private String nome;
+     private String email;
+     private String cep;
 
     public Usuario(String id, String nome, String email, String cep) {
         this.id = id;
