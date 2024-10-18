@@ -10,7 +10,4 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
     List<Usuario> findByNomeContainingIgnoreCase(String nome);
 
-    List<String> findAllById(String id);
-
-    Optional<Usuario> findById(String id);
 }

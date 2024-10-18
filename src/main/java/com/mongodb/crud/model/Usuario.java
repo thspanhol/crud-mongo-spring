@@ -1,5 +1,6 @@
 package com.mongodb.crud.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.lang.NonNull;
 
 @Data
 @NoArgsConstructor
+@Builder
 //@RequiredArgsConstructor
 //@Document(collation = "nova-colecao")
 public class Usuario {

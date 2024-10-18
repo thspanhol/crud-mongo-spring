@@ -13,8 +13,11 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public void save(UsuarioDTO usuario) {
         //TODO: Essa validação deve ser feita por meio do Spring Validator: https://medium.com/@himani.prasad016/validations-in-spring-boot-e9948aa6286b
@@ -24,7 +27,12 @@ public class UsuarioService {
             //TODO: O id é criado pelo próprio repositório, não sendo necessário popular
             // ---- Mongo repository cria obj id por padrão
             long id = this.usuarioRepository.count() + 1;
-            Usuario novoUsuario = new Usuario(String.valueOf(id), usuario.nome(), usuario.email(), usuario.cep());
+            Usuario novoUsuario = Usuario.builder()
+                    .id(String.valueOf(id))
+                    .nome(usuario.nome())
+                    .email(usuario.email())
+                    .cep(usuario.cep())
+                    .build();
             this.usuarioRepository.insert(novoUsuario);
         //}
     }

@@ -8,15 +8,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private LoggingInterceptor loggingInterceptor;
+    private final CookieInterceptor cookieInterceptor;
+
+    public WebConfig(CookieInterceptor cookieInterceptor) {
+        this.cookieInterceptor = cookieInterceptor;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loggingInterceptor)
+        registry.addInterceptor(cookieInterceptor)
                 .excludePathPatterns("/v1/usuarios/nome=**", "/v1/usuarios/last")
                 .addPathPatterns("/v1/usuarios/**");
-                //.addPathPatterns("/v1/usuarios/**", "/v1/usuarios/last");
-                //.addPathPatterns("/**");
     }
 }

@@ -1,15 +1,12 @@
 package com.mongodb.crud.controller;
 
-import com.mongodb.crud.model.CookieService;
-import com.mongodb.crud.config.UserNotFoundException;
+import com.mongodb.crud.config.CookieInterceptor;
+import com.mongodb.crud.model.CookieClass;
 import com.mongodb.crud.service.UsuarioService;
 import com.mongodb.crud.dto.UsuarioDTO;
 import com.mongodb.crud.model.Usuario;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +16,13 @@ import java.util.List;
 public class UsuarioController {
 
     //TODO: A injeção via autowired é antiga e não mais recomendada
-    @Autowired
-    private UsuarioService usuarioService;
+    // Feito
+
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     //TODO: Como tu já tá dentro do contexto de Usuario, fica redundante repetir "Usuarios". Ex: getAll()
     //TODO: Prioriza sempre usar inglês - se for pra escrever em português, coloca tudo em português
@@ -51,7 +53,7 @@ public class UsuarioController {
 
     @GetMapping("/last")
     public Usuario obterUltimo() {
-        return usuarioService.findById(CookieService.getCookie());
+        return usuarioService.findById(CookieClass.getCookie());
     }
 
     //TODO: "response" como nome da variavel tá estranho.

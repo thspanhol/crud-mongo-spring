@@ -1,6 +1,7 @@
 package com.mongodb.crud.config;
 
-import com.mongodb.crud.model.CookieService;
+import com.mongodb.crud.model.CookieClass;
+import com.mongodb.crud.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
@@ -11,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Objects;
 
 //TODO: Essa classe não é o LoggingInterceptor e sim o CookieInterceptor
+// Feito
 //TODO: Implementa a CookieService e injeta ela aqui pra fazer a manipulação de cookies
+// Feito
 @Component
-public class LoggingInterceptor implements HandlerInterceptor {
+public class CookieInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -22,11 +25,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
         System.out.println("URI " + request.getRequestURI());
 
         if (Objects.equals(request.getMethod(), "GET") && !request.getRequestURI().equals("/v1/usuarios")) {
-            String index = request.getRequestURI().substring(13);
-            Cookie cookie = new Cookie("lastUser", index);
-            cookie.setMaxAge(60 * 60);
-            CookieService.setCookie(index);
-            response.addCookie(cookie);
+            CookieService.createCookie(request, response);
         }
 
         return true;

@@ -3,7 +3,7 @@ package com.mongodb.crud.model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CookieService {
+public class CookieClass {
     @Getter
     @Setter
     static String cookie;
