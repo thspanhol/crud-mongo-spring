@@ -24,7 +24,7 @@ public class CookieInterceptor implements HandlerInterceptor {
         System.out.println("Request Method: " + request.getMethod());
         System.out.println("URI " + request.getRequestURI());
 
-        if (Objects.equals(request.getMethod(), "GET") && !request.getRequestURI().equals("/v1/usuarios")) {
+        if (Objects.equals(request.getMethod(), "GET") && !request.getRequestURI().equals("/v1/users")) {
             CookieService.createCookie(request, response);
         }
 

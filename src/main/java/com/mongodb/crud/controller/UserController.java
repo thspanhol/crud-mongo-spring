@@ -1,42 +1,40 @@
 package com.mongodb.crud.controller;
 
-import com.mongodb.crud.config.CookieInterceptor;
 import com.mongodb.crud.model.CookieClass;
-import com.mongodb.crud.service.UsuarioService;
-import com.mongodb.crud.dto.UsuarioDTO;
-import com.mongodb.crud.model.Usuario;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mongodb.crud.service.UserService;
+import com.mongodb.crud.dto.UserDTO;
+import com.mongodb.crud.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/usuarios")
-public class UsuarioController {
+@RequestMapping("/v1/users")
+public class UserController {
 
     //TODO: A injeção via autowired é antiga e não mais recomendada
     // Feito
 
-    private final UsuarioService usuarioService;
+    private final UserService userService;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     //TODO: Como tu já tá dentro do contexto de Usuario, fica redundante repetir "Usuarios". Ex: getAll()
     //TODO: Prioriza sempre usar inglês - se for pra escrever em português, coloca tudo em português
     @GetMapping
-    public List<Usuario> obterUsuarios() {
-        return usuarioService.findAll();
+    public List<User> findAll() {
+        return userService.findAll();
     }
 
     //TODO: ResponseEntity é uma maneira antiga e defasada que não vaz mais sentido. Responde sempre o próprio objeto
     // Se precisar mudar o verbo de resposta, usa o @ResponseStatus()
     // Feito
     @GetMapping("/{id}")
-    public Usuario obterUsuarioPeloId(@PathVariable String id) {
-        return usuarioService.findById(id);
+    public User findById(@PathVariable String id) {
+        return userService.findById(id);
     }
 
     //TODO: Cria uma classe pros ExceptionHandlers - nunca na controller
@@ -46,14 +44,14 @@ public class UsuarioController {
     // @RequestParam não é declarado na url. Ex: @RequestParam("nome") String nome
     // Nesse caso de buscar pelo nome, o correto é usar o @RequestParam
     // Feito
-    @GetMapping("/nome")
-    public List<Usuario> obterPeloNome(@RequestParam("nome") String nome) {
-        return usuarioService.findByName(nome);
+    @GetMapping("/name")
+    public List<User> findByName(@RequestParam("name") String nome) {
+        return userService.findByName(nome);
     }
 
     @GetMapping("/last")
-    public Usuario obterUltimo() {
-        return usuarioService.findById(CookieClass.getCookie());
+    public User findLastSearch() {
+        return userService.findById(CookieClass.getCookie());
     }
 
     //TODO: "response" como nome da variavel tá estranho.
@@ -61,14 +59,14 @@ public class UsuarioController {
     // Feito
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrarUsuario(@RequestBody UsuarioDTO usuario) {
-        usuarioService.save(usuario);
+    public void register(@RequestBody UserDTO usuario) {
+        userService.save(usuario);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletaUsuario(@PathVariable String id) {
-        usuarioService.deleteBySingleId(id);
+    public void delete(@PathVariable String id) {
+        userService.deleteBySingleId(id);
     }
 
     //TODO: Evita qualquer tipo de lógica dentro da controller, loops, ifs.
@@ -76,15 +74,15 @@ public class UsuarioController {
     // Feito
     @DeleteMapping("/ids")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletaUsuariosPelosIds(@RequestParam("lista") List<String> ids) {
-        usuarioService.deleteByIdsList(ids);
+    public void deleteByIdsList(@RequestParam("list") List<String> ids) {
+        userService.deleteByIdsList(ids);
     }
 
     //TODO: Envia o objeto inteiro pra dentro da service. Ex: usuarioService.editUser(id, request)
     // Feito
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void alteraUsuario(@RequestBody UsuarioDTO usuario, @PathVariable String id) {
-        usuarioService.editUser(id, usuario);
+    public void update(@RequestBody UserDTO usuario, @PathVariable String id) {
+        userService.editUser(id, usuario);
     }
 }
