@@ -1,7 +1,6 @@
 package com.mongodb.crud.service;
 
 import com.mongodb.crud.config.exceptions.UserNotFoundException;
-import com.mongodb.crud.config.exceptions.MethodArgumentNotValidException;
 import com.mongodb.crud.dto.UserDTO;
 import com.mongodb.crud.repository.UserEntity;
 import com.mongodb.crud.repository.UserRepository;
@@ -15,7 +14,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-
 
     public void save(UserDTO user) {
         this.userRepository.insert(user.retornaUser());
