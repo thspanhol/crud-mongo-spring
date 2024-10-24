@@ -21,10 +21,7 @@ public class UserController {
 
     @GetMapping
     public List<UserEntity> findAll(@RequestParam(value = "name", required = false) String name) {
-        System.out.println(name);
-        if (name != null) {
-            return userService.findByName(name);
-        }
+        if (name != null) return userService.findByName(name);
         return userService.findAll();
     }
 
