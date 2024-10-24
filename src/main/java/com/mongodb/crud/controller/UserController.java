@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/name")
-    public List<UserEntity> findByName(@RequestParam("name") String nome) {
-        return userService.findByName(nome);
+    public List<UserEntity> findByName(@RequestParam("name") String name) {
+        return userService.findByName(name);
     }
 
     @GetMapping("/last")
