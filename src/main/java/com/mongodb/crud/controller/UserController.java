@@ -20,18 +20,17 @@ public class UserController {
     private final CookieService cookieService;
 
     @GetMapping
-    public List<UserEntity> findAll() {
+    public List<UserEntity> findAll(@RequestParam(value = "name", required = false) String name) {
+        System.out.println(name);
+        if (name != null) {
+            return userService.findByName(name);
+        }
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
     public UserEntity findById(@PathVariable String id) {
         return userService.findById(id);
-    }
-
-    @GetMapping("/name")
-    public List<UserEntity> findByName(@RequestParam("name") String name) {
-        return userService.findByName(name);
     }
 
     @GetMapping("/last")
